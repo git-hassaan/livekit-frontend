@@ -1,0 +1,18 @@
+// src/styles/VideoCall.scss
+.video-call {
+    max-width: 1200px;
+    margin: 0 auto;
+  
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      text-align: center;
+    }
+  
+    .participants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+  }

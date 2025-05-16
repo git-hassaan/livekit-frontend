@@ -1,0 +1,74 @@
+// src/styles/RoomConnection.scss
+.room-connection {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      text-align: center;
+    }
+  
+    .input-group {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #34495e;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+  
+        &:focus {
+          outline: none;
+          border-color: #3498db;
+        }
+      }
+    }
+  
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+  
+      button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #3498db;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+  
+        &:hover {
+          background-color: #2980b9;
+        }
+  
+        &:disabled {
+          background-color: #95a5a6;
+          cursor: not-allowed;
+        }
+  
+        &:last-child {
+          background-color: #e74c3c;
+  
+          &:hover {
+            background-color: #c0392b;
+          }
+        }
+      }
+    }
+  }

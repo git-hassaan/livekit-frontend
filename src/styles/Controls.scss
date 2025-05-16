@@ -1,0 +1,41 @@
+// src/styles/Controls.scss
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e9ecef;
+      color: #495057;
+      cursor: pointer;
+      transition: all 0.2s ease;
+  
+      &:hover {
+        background-color: #dee2e6;
+      }
+  
+      &.active {
+        background-color: #3498db;
+        color: white;
+      }
+  
+      svg {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+  
+      span {
+        font-size: 12px;
+      }
+    }
+  }

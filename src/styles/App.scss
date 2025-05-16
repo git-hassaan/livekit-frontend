@@ -1,0 +1,154 @@
+// src/styles/App.scss
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  .sidebar {
+    width: 80px;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    transition: width 0.3s ease;
+
+    &:hover {
+      width: 200px;
+
+      button span {
+        display: inline;
+      }
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px;
+      margin: 10px 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #34495e;
+      }
+
+      &.active {
+        background-color: #3498db;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      svg {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      span {
+        display: none;
+        font-size: 14px;
+      }
+    }
+
+    a {
+        background: none;
+        border: none;
+        color: white;
+        padding: 15px;
+        margin: 10px 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+    
+        &:hover {
+          background-color: #34495e;
+        }
+    
+        &.active {
+          background-color: #3498db;
+        }
+    
+        svg {
+          font-size: 24px;
+          margin-bottom: 5px;
+        }
+    
+        span {
+          display: none;
+          font-size: 14px;
+        }
+      }
+    
+      &:hover {
+        a span {
+          display: inline;
+        }
+      }
+    }
+
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: white;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+
+    .sidebar {
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px;
+
+      &:hover {
+        width: 100%;
+
+        button span {
+          display: none;
+        }
+      }
+
+      button {
+        margin: 0 5px;
+        padding: 10px;
+      }
+    }
+
+    .main-content {
+      padding: 15px;
+    }
+  }
+}
