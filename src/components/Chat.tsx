@@ -1,6 +1,7 @@
 // src/components/Chat.tsx
 import { useState, useEffect } from 'react';
 import { Room, RemoteParticipant } from 'livekit-client';
+import '../styles/Chat.scss'; // Add this import
 
 interface ChatProps {
   room: Room;

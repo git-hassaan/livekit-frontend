@@ -2,6 +2,7 @@
 import { Room,RemoteParticipant } from 'livekit-client';
 import { ParticipantView } from './ParticipantView';
 import { Controls } from './Controls';
+import '../styles/VideoCall.scss'; // Add this import
 
 interface VideoCallProps {
   room: Room;

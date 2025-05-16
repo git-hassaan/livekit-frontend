@@ -1,6 +1,7 @@
 // src/components/RoomConnection.tsx
 import { useEffect, useState } from 'react';
 import { Room, RoomEvent, RemoteParticipant } from 'livekit-client';
+import '../styles/RoomConnection.scss';
 
 interface RoomConnectionProps {
   room: Room;

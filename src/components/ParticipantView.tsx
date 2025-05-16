@@ -1,6 +1,7 @@
 // src/components/ParticipantView.tsx
 import { useRef, useState, useEffect } from 'react';
 import { RemoteParticipant, Track, RemoteTrackPublication } from 'livekit-client';
+import '../styles/ParticipantView.scss'; // Add this import
 
 interface ParticipantViewProps {
   participant: RemoteParticipant;

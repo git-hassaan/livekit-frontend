@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Room, RemoteParticipant, Track } from 'livekit-client';
 import { ParticipantView } from './ParticipantView';
+import '../styles/ScreenShare.scss'; // Add this import
 
 interface ScreenShareProps {
   room: Room;
