@@ -1,7 +1,7 @@
-// src/components/RoomConnection.tsx
 import { useEffect, useState } from 'react';
-import { Room, RoomEvent, RemoteParticipant } from 'livekit-client';
+import { Room, RoomEvent, RemoteParticipant, Track, RemoteTrackPublication } from 'livekit-client';
 import '../styles/RoomConnection.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface RoomConnectionProps {
   room: Room;
@@ -9,11 +9,61 @@ interface RoomConnectionProps {
   setParticipants: (participants: RemoteParticipant[]) => void;
 }
 
+// Enhanced mock participant generator with proper audio tracks
+const generateMockParticipant = (index: number): RemoteParticipant => {
+  const names = ['Alex', 'Jamie', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Jordan', 'Skyler'];
+  const roles = ['doctor', 'engineer', 'designer', 'teacher', 'student'];
+
+  // Create a mock participant
+  const participant: any = new RemoteParticipant(
+    `${names[Math.floor(Math.random() * names.length)]}-${roles[Math.floor(Math.random() * roles.length)]}-${index}` as any,
+    `participant-${Math.random().toString(36).substr(2, 9)}`
+  );
+
+  // Create a mock audio track publication
+  const mockPublication = new RemoteTrackPublication(
+    Track.Kind.Audio,
+    `audio-track-${index}` as any,
+    'mock-track-sid' as any
+  );
+
+  // Add mock methods needed for the audio call
+  mockPublication.track = {
+    kind: Track.Kind.Audio,
+    attach: (element: HTMLAudioElement) => {
+      console.log(`Attaching mock audio for ${participant.identity}`);
+      // In a real app, this would attach a real media stream
+    },
+    detach: () => { },
+    isMuted: false,
+    isEnabled: true,
+  } as any;
+
+  // Add to participant's tracks
+  participant.addTrackPublication(mockPublication);
+
+  return participant;
+};
+
 export const RoomConnection = ({ room, setRoom, setParticipants }: RoomConnectionProps) => {
-  const [url, setUrl] = useState<string>('wss://your-livekit-server-url');
-  const [token, setToken] = useState<string>('');
+  const [url, setUrl] = useState<string>('wss://abcdefghijklmnopqrstuvwxyz-jj12giiv.livekit.cloud');
+  const [token, setToken] = useState<string>('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDc2ODA4NjQsImlzcyI6IkFQSVluY3g3Z1VpM2VYdSIsIm5iZiI6MTc0NzQ4MDg2NCwic3ViIjoibWF4IiwidmlkZW8iOnsiY2FuUHVibGlzaCI6dHJ1ZSwiY2FuUHVibGlzaERhdGEiOnRydWUsImNhblN1YnNjcmliZSI6dHJ1ZSwicm9vbSI6Im1heCByb29tIiwicm9vbUpvaW4iOnRydWV9fQ.-Q1tWBxCEoCEHWww-0dbDxNC05uCKjYWmt-8RZSSR2M');
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const addMockParticipants = () => {
+    const mockParticipants: RemoteParticipant[] = [];
+    for (let i = 0; i < 5; i++) {
+      mockParticipants.push(generateMockParticipant(i));
+    }
+    setParticipants(mockParticipants);
+
+    // Simulate participant connection events
+    mockParticipants.forEach(participant => {
+      room.emit(RoomEvent.ParticipantConnected, participant);
+    });
+  };
 
   const connectToRoom = async () => {
     if (!url || !token) {
@@ -26,6 +76,11 @@ export const RoomConnection = ({ room, setRoom, setParticipants }: RoomConnectio
       await room.connect(url, token);
       setRoom(room);
       setIsConnected(true);
+
+      // Add mock participants after successful connection
+      addMockParticipants();
+
+      navigate('/audio');
     } catch (error) {
       console.error('Failed to connect', error);
       alert('Failed to connect: ' + error);

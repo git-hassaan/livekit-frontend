@@ -1,6 +1,6 @@
 // src/App.tsx
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { Room } from 'livekit-client';
 import type { RemoteParticipant } from 'livekit-client';
 import { RoomConnection } from './components/RoomConnection';
@@ -18,6 +18,7 @@ export const App = () => {
   const [room] = useState<Room>(new Room());
   const [participants, setParticipants] = useState<RemoteParticipant[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleConnected = () => setIsConnected(true);
@@ -36,36 +37,46 @@ export const App = () => {
   }, [room]);
 
   return (
-    <Router>
       <div className="app">
         <div className="sidebar">
-          <a href="/audio" className={window.location.pathname === '/audio' ? 'active' : ''}>
+          <Link
+            to="/audio"
+            className={location.pathname === '/audio' ? 'active' : ''}
+          >
             <PhoneIcon />
             <span>Audio Call</span>
-          </a>
-          <a href="/video" className={window.location.pathname === '/video' ? 'active' : ''}>
+          </Link>
+          <Link
+            to="/video"
+            className={location.pathname === '/video' ? 'active' : ''}
+          >
             <VideocamIcon />
             <span>Video Call</span>
-          </a>
-          <a href="/screen" className={window.location.pathname === '/screen' ? 'active' : ''}>
+          </Link>
+          <Link
+            to="/screen"
+            className={location.pathname === '/screen' ? 'active' : ''}
+          >
             <DesktopWindowsIcon />
             <span>Screen Share</span>
-          </a>
-          <a href="/chat" className={window.location.pathname === '/chat' ? 'active' : ''}>
+          </Link>
+          <Link
+            to="/chat"
+            className={location.pathname === '/chat' ? 'active' : ''}
+          >
             <ChatIcon />
             <span>Chat</span>
-          </a>
+          </Link>
+        </div>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<RoomConnection room={room} setRoom={() => { }} setParticipants={setParticipants} />} />
+            <Route path="/audio" element={isConnected ? <AudioCall room={room} participants={participants} /> : <Navigate to="/" />} />
+            <Route path="/video" element={isConnected ? <VideoCall room={room} participants={participants} /> : <Navigate to="/" />} />
+            <Route path="/screen" element={isConnected ? <ScreenShare room={room} participants={participants} /> : <Navigate to="/" />} />
+            <Route path="/chat" element={isConnected ? <Chat room={room} participants={participants} /> : <Navigate to="/" />} />
+          </Routes>
+        </div>
       </div>
-      <div className="main-content">
-        <Routes>
-          <Route path="/" element={<RoomConnection room={room} setRoom={() => { }} setParticipants={setParticipants} />} />
-          <Route path="/audio" element={isConnected ? <AudioCall room={room} participants={participants} /> : <Navigate to="/" />} />
-          <Route path="/video" element={isConnected ? <VideoCall room={room} participants={participants} /> : <Navigate to="/" />} />
-          <Route path="/screen" element={isConnected ? <ScreenShare room={room} participants={participants} /> : <Navigate to="/" />} />
-          <Route path="/chat" element={isConnected ? <Chat room={room} participants={participants} /> : <Navigate to="/" />} />
-        </Routes>
-      </div>
-    </div>
-    </Router >
   );
 };
